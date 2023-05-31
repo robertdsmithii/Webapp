@@ -1,0 +1,35 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Configure the HTTP request pipeline
+builder.Configure(app =>
+{
+    app.UseRouting();
+
+    app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapGet("/", async context =>
+        {
+            await context.Response.WriteAsync("Hello, World!");
+        });
+    });
+});
+
+var app = builder.Build();
+
+// Run the web application
+if (app.Environment.IsDevelopment())
+{
+    app.Run();
+}
+else
+{
+    app.Run(async context =>
+    {
+        await context.Response.WriteAsync("An error occurred.");
+    });
+}
